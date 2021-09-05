@@ -4,4 +4,4 @@ Bash scripts for oddly specific tasks.
 
 
 <h2>silencer.sh</h2> 
-Removes digital silence from the beginning and end of an audio file.  Only removes zero bit samples; not analog silence.  Useful when ripping music from various streaming services.
+Uses FFMPEG to remove digital silence from the beginning and end of an audio file.  Removes zero bit samples but not analog silence.  Useful when ripping music from various streaming services.
