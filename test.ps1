@@ -1,4 +1,4 @@
-$taskAction = New-ScheduledTaskAction -Execute "C:\IddSampleDriver\VirtualMonitorHelper.exe"
-$taskTrigger = New-ScheduledTaskTrigger -AtLogon
-$taskPrincipal = New-ScheduledTaskPrincipal -UserId $env:USERNAME
-Register-ScheduledTask -Action $taskAction -Trigger $taskTrigger -TaskName "Virtual Monitor Helper" -Principal $taskPrincipal -RunLevel Highest
+$action = New-ScheduledTaskAction -Execute 'C:\IddSampleDriver\VirtualMonitorHelper.exe'
+$trigger = New-ScheduledTaskTrigger -AtLogOn
+$principal = New-ScheduledTaskPrincipal -UserId "NT AUTHORITY\SYSTEM" -LogonType S4U
+Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Virtual Monitor Helper" -Principal $principal
