@@ -95,14 +95,12 @@ $destinationFolder = "C:\IddSampleDriver"
 # Download the file
 Invoke-WebRequest -Uri $url -OutFile "$destinationFolder\VirtualMonitorHelper.exe"
 
-'Adding helper to startup via registry'
+'Adding helper to startup via Task Scheduler'
 
-# Set up as a Windows startup application
-$registryPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run"
-$registryName = "VirtualMonitorHelper"
-$registryValue = "$destinationFolder\VirtualMonitorHelper.exe"
-
-New-ItemProperty -Path $registryPath -Name $registryName -Value $registryValue -PropertyType String -Force
+$action = New-ScheduledTaskAction -Execute 'C:\IddSampleDriver\VirtualMonitorHelper.exe'
+$trigger = New-ScheduledTaskTrigger -AtLogOn
+$trigger.Delay = 'PT1M'
+Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Virtual Monitor Helper" -RunLevel Highest
 
 'Starting Virtual Display Helper'
 
@@ -110,4 +108,4 @@ New-ItemProperty -Path $registryPath -Name $registryName -Value $registryValue -
 Start-Process -FilePath "$destinationFolder\VirtualMonitorHelper.exe" -Verb RunAs
 
 
-'All done!'
+'All done! Helper will start 60 seconds after login to ensure necessary conditions met.'
